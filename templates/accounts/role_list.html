@@ -1,0 +1,50 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="{{ user.theme }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% trans "Roles" %} · Holly Shift</title>
+</head>
+<body>
+  <main>
+    <h1>{% trans "Roles" %}</h1>
+
+    {% if messages %}
+      <ul>
+        {% for message in messages %}<li role="alert">{{ message }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+
+    <p><a href="{% url 'role_create' %}">{% trans "New role" %}</a></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "Name" %}</th>
+          <th>{% trans "Code" %}</th>
+          <th>{% trans "Permissions" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for role in roles %}
+          <tr>
+            <td>{{ role.name }}{% if role.is_system %} <small>({% trans "built-in" %})</small>{% endif %}</td>
+            <td>{{ role.code }}</td>
+            <td>{{ role.permission_count }}</td>
+            <td>
+              <a href="{% url 'role_update' role.pk %}">{% trans "Edit" %}</a>
+              {% if not role.is_system %} · <a href="{% url 'role_delete' role.pk %}">{% trans "Delete" %}</a>{% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">{% trans "No roles yet." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p><a href="{% url 'profile' %}">{% trans "Back to profile" %}</a></p>
+  </main>
+</body>
+</html>

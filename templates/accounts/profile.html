@@ -1,0 +1,31 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="{{ user.theme }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% trans "My profile" %} · Holly Shift</title>
+</head>
+<body>
+  <main>
+    <h1>{% trans "My profile" %}</h1>
+
+    {% if user.photo %}
+      <img src="{{ user.photo.url }}" alt="{% trans 'Profile photo' %}" width="96" height="96">
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'profile' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Save" %}</button>
+    </form>
+
+    <p><a href="{% url 'password_change' %}">{% trans "Change password" %}</a></p>
+
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">{% trans "Sign out" %}</button>
+    </form>
+  </main>
+</body>
+</html>

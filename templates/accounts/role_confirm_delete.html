@@ -1,0 +1,21 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="{{ user.theme }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% trans "Delete role" %} · Holly Shift</title>
+</head>
+<body>
+  <main>
+    <h1>{% trans "Delete role" %}</h1>
+    <p>{% blocktrans with name=object.name %}Delete the role "{{ name }}"? This cannot be undone.{% endblocktrans %}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">{% trans "Delete" %}</button>
+      <a href="{% url 'role_list' %}">{% trans "Cancel" %}</a>
+    </form>
+  </main>
+</body>
+</html>

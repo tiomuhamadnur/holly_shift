@@ -1,0 +1,6 @@
+Django==5.2.19
+psycopg[binary]==3.3.8
+Pillow==13.0.0
+python-dotenv==1.2.4
+redis==8.1.0
+django-redis==7.0.0

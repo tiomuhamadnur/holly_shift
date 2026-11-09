@@ -1,0 +1,27 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="{{ user.theme }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% trans "System settings" %} · Holly Shift</title>
+</head>
+<body>
+  <main>
+    <h1>{% trans "System settings" %}</h1>
+
+    {% if messages %}
+      <ul>
+        {% for message in messages %}<li role="alert">{{ message }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Save" %}</button>
+      <a href="{% url 'profile' %}">{% trans "Cancel" %}</a>
+    </form>
+  </main>
+</body>
+</html>

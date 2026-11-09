@@ -1,0 +1,49 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="{{ user.theme }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if object %}{% trans "Edit role" %}{% else %}{% trans "New role" %}{% endif %} · Holly Shift</title>
+</head>
+<body>
+  <main>
+    <h1>{% if object %}{% trans "Edit role" %}{% else %}{% trans "New role" %}{% endif %}</h1>
+
+    <form method="post">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}<div role="alert">{{ form.non_field_errors }}</div>{% endif %}
+
+      <p>
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+        {{ form.name.errors }}
+      </p>
+
+      <p>
+        <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+        {{ form.description }}
+        {{ form.description.errors }}
+      </p>
+
+      <fieldset>
+        <legend>{% trans "Permissions" %}</legend>
+        {{ form.permissions.errors }}
+        {% for module, permissions in permission_groups.items %}
+          <h3>{{ module }}</h3>
+          {% for permission in permissions %}
+            <label>
+              <input type="checkbox" name="permissions" value="{{ permission.pk }}"{% if permission.pk in selected_ids %} checked{% endif %}>
+              {{ permission.code }} — {{ permission.name }}
+            </label><br>
+          {% endfor %}
+        {% endfor %}
+      </fieldset>
+
+      <button type="submit">{% trans "Save" %}</button>
+      <a href="{% url 'role_list' %}">{% trans "Cancel" %}</a>
+    </form>
+  </main>
+</body>
+</html>
